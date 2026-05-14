@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolBox Pro</title>
+    <meta name="description" content="أكبر مجموعة أدوات واختصارات لتوفير الوقت - Nourddine Abatal">
+    <meta name="author" content="Nourddine Abatal">
+    <meta name="copyright" content="© 2026 Nourddine Abatal. جميع الحقوق محفوظة.">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+    <meta name="theme-color" content="#0d1117">
+    
+    <style>
+        :root {
+            --bg: #0d1117; --card: #161b22; --border: #30363d;
+            --text: #e6edf3; --sub: #8b949e; --red: #f85149;
+            --red-bg: #f8514922; --green: #3fb950; --green-bg: #3fb95022;
+            --blue: #58a6ff; --gold: #d2991d; --gold-bg: #d2991d22;
+            --whatsapp: #25d366; --purple: #a371f7; --purple-bg: #a371f722;
+            --hover: #1c2128;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, -apple-system, sans-serif;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; padding: 16px; padding-bottom: 100px;
+        }
+        .container { max-width: 520px; margin: 0 auto; }
+        .header { text-align: center; padding: 20px 0 14px; }
+        .header .icon { font-size: 48px; }
+        .header h1 {
+            font-size: 1.8em; margin: 4px 0; font-weight: 800;
+            background: linear-gradient(135deg, #f85149, #d2991d);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header .slogan { color: var(--sub); font-size: 0.82em; }
+        .trial-banner {
+            background: #a371f722; border: 2px solid var(--purple);
+            border-radius: 14px; padding: 14px 18px; margin-bottom: 14px; text-align: center;
+        }
+        .trial-banner .days { font-size: 2em; font-weight: 800; color: var(--purple); }
+        .trial-banner p { font-size: 0.82em; margin: 4px 0; }
+        .gold-badge {
+            display: none; text-align: center;
+            background: linear-gradient(135deg, #d2991d, #f0c040);
+            color: #000; padding: 7px 18px; border-radius: 20px;
+            font-weight: bold; font-size: 0.78em; margin: 0 auto 12px; width: fit-content;
+            animation: glow 2s infinite;
+        }
+        @keyframes glow { 0%,100%{box-shadow:0 0 10px rgba(210,153,29,0.3)} 50%{box-shadow:0 0 25px rgba(210,153,29,0.6)} }
+        .gold-badge.active { display: block; }
+        .stats { display: flex; gap: 6px; margin-bottom: 12px; }
+        .stat { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 6px; text-align: center; font-size: 0.7em; }
+        .stat .num { font-size: 1.3em; font-weight: bold; }
+        .stat .num.red { color: var(--red); } .stat .num.green { color: var(--green); } .stat .num.gold { color: var(--gold); }
+        .stat .label { color: var(--sub); margin-top: 2px; }
+        .search-bar { position: relative; margin-bottom: 10px; }
+        .search-bar input { width: 100%; padding: 12px 16px; padding-right: 42px; border-radius: 26px; border: 2px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.88em; font-family: inherit; transition: 0.3s; }
+        .search-bar input:focus { outline: none; border-color: var(--blue); }
+        .search-bar .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--sub); }
+        .tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+        .tab { flex: 1; padding: 10px; border-radius: 12px; border: 2px solid var(--border); background: var(--card); color: var(--sub); cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.8em; text-align: center; transition: 0.2s; }
+        .tab.active.red { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+        .tab.active.green { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+        .filters { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+        .filter-chip { padding: 4px 10px; border-radius: 12px; font-size: 0.68em; cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--sub); font-family: inherit; transition: 0.2s; }
+        .filter-chip.active { border-color: var(--blue); background: #58a6ff18; color: var(--blue); }
+        .tools-list { display: flex; flex-direction: column; gap: 5px; }
+        .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; cursor: pointer; text-decoration: none; color: inherit; }
+        .tool-card:hover { border-color: var(--blue); background: var(--hover); }
+        .tool-left { text-align: right; flex: 1; min-width: 0; }
+        .tool-name { font-weight: 600; font-size: 0.85em; }
+        .tool-desc { font-size: 0.7em; color: var(--sub); margin-top: 2px; }
+        .tool-meta { display: flex; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
+        .tool-tag { font-size: 0.62em; padding: 2px 7px; border-radius: 7px; font-weight: 500; }
+        .tag-red { background: var(--red-bg); color: var(--red); } .tag-green { background: var(--green-bg); color: var(--green); } .tag-purple { background: var(--purple-bg); color: var(--purple); }
+        .tool-btn { padding: 6px 12px; border-radius: 16px; border: none; font-weight: 600; font-size: 0.7em; cursor: pointer; font-family: inherit; white-space: nowrap; margin-right: 8px; }
+        .btn-red { background: var(--red); color: white; } .btn-green { background: var(--green); color: #000; }
+        .no-results { text-align: center; padding: 36px 16px; color: var(--sub); }
+        .upgrade-banner { background: linear-gradient(135deg, #1a1200, #0d0800); border: 2px solid var(--gold); border-radius: 14px; padding: 18px; text-align: center; margin-top: 18px; }
+        .upgrade-banner h3 { color: var(--gold); margin-bottom: 3px; font-size: 0.95em; }
+        .upgrade-banner p { font-size: 0.75em; color: #aaa; margin-bottom: 10px; }
+        .btn-gold { background: linear-gradient(135deg, #d2991d, #f0c040); color: #000; padding: 10px 24px; border-radius: 22px; border: none; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 0.84em; }
+        .floating-btns { position: fixed; bottom: 20px; left: 16px; display: flex; flex-direction: column; gap: 10px; z-index: 99; }
+        .float-btn { padding: 12px 18px; border-radius: 28px; border: none; font-weight: 700; font-size: 0.8em; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); text-decoration: none; color: white; }
+        .btn-wa { background: #25d366; } .btn-gold-float { background: linear-gradient(135deg, #d2991d, #f0c040); color: #000; }
+        footer { text-align: center; margin-top: 24px; padding: 14px; color: #444; font-size: 0.66em; line-height: 2.2; }
+        footer a { color: #666; text-decoration: none; } footer a:hover { color: var(--gold); }
+        #toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 22px; font-size: 0.78em; font-weight: 600; opacity: 0; transition: 0.3s; z-index: 999; white-space: nowrap; }
+        #toast.show { opacity: 1; bottom: 100px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="icon">🧰</div>
+        <h1>ToolBox Pro</h1>
+        <p class="slogan">1000 أداة في جيبك</p>
+    </div>
+
+    <div class="gold-badge" id="goldBadge">👑 ذهبي • وصول كامل مدى الحياة</div>
+
+    <div class="trial-banner" id="trialBanner">
+        <div class="days" id="trialDays">15</div>
+        <p>يوم متبقي في النسخة التجريبية</p>
+        <button class="btn-gold" style="margin-top:8px;" onclick="showPayment()">👑 ترقية للذهبي - 9.99$</button>
+    </div>
+
+    <div class="stats">
+        <div class="stat"><div class="num green" id="actionCount">0</div><div class="label">🟢 أوامر مباشرة</div></div>
+        <div class="stat"><div class="num red" id="shortcutCount">0</div><div class="label">🔴 اختصارات</div></div>
+        <div class="stat"><div class="num gold" id="totalCount">0</div><div class="label">📊 المجموع</div></div>
+    </div>
+
+    <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="ابحث عن أي أداة..." oninput="renderTools()">
+    </div>
+
+    <div class="tabs">
+        <button class="tab green active" id="tabAction" onclick="switchTab('action')">🟢 أوامر مباشرة</button>
+        <button class="tab red" id="tabShortcut" onclick="switchTab('shortcut')">🔴 اختصارات سريعة</button>
+    </div>
+
+    <div class="filters">
+        <button class="filter-chip active" onclick="setFilter('all', this)">📋 الكل</button>
+        <button class="filter-chip" onclick="setFilter('google', this)">Google</button>
+        <button class="filter-chip" onclick="setFilter('social', this)">💬 تواصل</button>
+        <button class="filter-chip" onclick="setFilter('tools', this)">🛠️ أدوات</button>
+        <button class="filter-chip" onclick="setFilter('settings', this)">⚙️ إعدادات</button>
+        <button class="filter-chip" onclick="setFilter('direct', this)">📱 مباشر</button>
+    </div>
+
+    <div class="tools-list" id="toolsList"></div>
+
+    <div class="upgrade-banner" id="upgradeBanner">
+        <h3>👑 افتح 1000 أداة كاملة</h3>
+        <p>وصول كامل • تحديثات أسبوعية • دعم فني • للأبد</p>
+        <button class="btn-gold" onclick="showPayment()">💳 اشترك بـ 9.99$ مدى الحياة</button>
+    </div>
+
+    <footer>
+        <p><a href="https://ko-fi.com/nourddineabatal" target="_blank">☕ Ko-fi</a> &nbsp;•&nbsp; <a href="https://www.paypal.com/paypalme/nourddineabatal06" target="_blank">💳 PayPal</a></p>
+        <p>© 2026 Nourddine Abatal. جميع الحقوق محفوظة.</p>
+        <p style="font-size:0.6em;">nourddineabatal06@gmail.com</p>
+    </footer>
+</div>
+
+<div class="floating-btns">
+    <a href="https://wa.me/212711366556?text=مرحباً%20Nourddine،%20لدي%20سؤال%20حول%20ToolBox%20Pro" target="_blank" class="float-btn btn-wa">💬 واتساب</a>
+    <button class="float-btn btn-gold-float" onclick="showPayment()">👑 ذهبي</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+    // ============================================
+    // © 2026 Nourddine Abatal. All rights reserved.
+    // ToolBox Pro - 15 يوم تجريبي
+    // ============================================
+
+    let currentTab = 'action';
+    let currentFilter = 'all';
+    let isGold = false;
+    let trialDaysLeft = 15;
+
+    const ACTION_TOOLS = [
+        { name: "📨 فتح الرسائل SMS", desc: "تطبيق الرسائل النصية", url: "sms:", category: "direct", type: "action" },
+        { name: "📞 اتصال هاتفي", desc: "فتح لوحة الاتصال", url: "tel:", category: "direct", type: "action" },
+        { name: "✉️ بريد إلكتروني جديد", desc: "إنشاء رسالة جديدة", url: "mailto:", category: "direct", type: "action" },
+        { name: "💬 واتساب ويب", desc: "فتح واتساب مباشرة", url: "https://web.whatsapp.com", category: "direct", type: "action" },
+        { name: "💬 تيليجرام ويب", desc: "فتح تيليجرام", url: "https://web.telegram.org", category: "direct", type: "action" },
+        { name: "💬 ماسنجر", desc: "فتح ماسنجر", url: "https://messenger.com", category: "direct", type: "action" },
+        { name: "✅ Google Tasks", desc: "قائمة المهام مباشرة", url: "https://tasks.google.com/embed/origin=app", category: "google", type: "action" },
+        { name: "🌐 ترجمة فورية", desc: "ترجمة النص مباشرة", url: "https://translate.google.com/?text=", category: "google", type: "action" },
+        { name: "📍 موقعي الحالي", desc: "فتح الخرائط في موقعك", url: "https://maps.google.com/?q=my+location", category: "google", type: "action" },
+        { name: "📅 تقويم Google", desc: "فتح التقويم مباشرة", url: "https://calendar.google.com", category: "google", type: "action" },
+        { name: "📝 Google Keep", desc: "ملاحظات سريعة", url: "https://keep.google.com", category: "google", type: "action" },
+        { name: "💾 Google Drive", desc: "الملفات السحابية", url: "https://drive.google.com", category: "google", type: "action" },
+        { name: "🖼️ Google Photos", desc: "معرض الصور", url: "https://photos.google.com", category: "google", type: "action" },
+        { name: "👤 جهات الاتصال", desc: "Google Contacts", url: "https://contacts.google.com", category: "google", type: "action" },
+        { name: "📹 Google Meet", desc: "اجتماع فيديو", url: "https://meet.google.com", category: "google", type: "action" },
+        { name: "🔑 كلمات السر المحفوظة", desc: "إدارة كلمات السر", url: "https://passwords.google.com", category: "settings", type: "action" },
+        { name: "📱 إدارة الأجهزة", desc: "الأجهزة المرتبطة بحسابك", url: "https://myaccount.google.com/device-activity", category: "settings", type: "action" },
+        { name: "🛡️ فحص الأمان", desc: "فحص أمان الحساب", url: "https://myaccount.google.com/security-checkup", category: "settings", type: "action" },
+        { name: "🔒 تغيير كلمة المرور", desc: "تحديث كلمة السر", url: "https://myaccount.google.com/security", category: "settings", type: "action" },
+        { name: "🗑️ حذف نشاطي", desc: "سجل التصفح والنشاط", url: "https://myactivity.google.com", category: "settings", type: "action" },
+        { name: "📥 Google Takeout", desc: "تصدير بياناتك", url: "https://takeout.google.com", category: "settings", type: "action" },
+        { name: "📢 إعدادات الإعلانات", desc: "التحكم في الإعلانات", url: "https://adssettings.google.com", category: "settings", type: "action" },
+        { name: "💳 Google Pay", desc: "الدفع الإلكتروني", url: "https://pay.google.com", category: "settings", type: "action" },
+        { name: "📊 لوحة تحكم Google", desc: "حسابك بالكامل", url: "https://myaccount.google.com/dashboard", category: "settings", type: "action" },
+        { name: "🏪 متجر Play", desc: "تطبيقات أندرويد", url: "https://play.google.com/store", category: "tools", type: "action" },
+        { name: "🎵 YouTube Music", desc: "موسيقى مباشرة", url: "https://music.youtube.com", category: "tools", type: "action" },
+        { name: "📺 YouTube", desc: "مقاطع فيديو", url: "https://youtube.com", category: "tools", type: "action" },
+        { name: "🗺️ خرائط Google", desc: "الملاحة", url: "https://maps.google.com", category: "tools", type: "action" },
+        { name: "🌤️ طقس", desc: "حالة الطقس", url: "https://weather.com", category: "tools", type: "action" },
+        { name: "⏰ وقت العالم", desc: "الساعة العالمية", url: "https://time.is", category: "tools", type: "action" },
+        { name: "🧮 حاسبة ويب", desc: "آلة حاسبة", url: "https://www.desmos.com/scientific", category: "tools", type: "action" },
+        { name: "📏 تحويل الوحدات", desc: "محول سريع", url: "https://www.convertworld.com/ar", category: "tools", type: "action" },
+        { name: "🖼️ إزالة خلفية الصور", desc: "Remove.bg", url: "https://remove.bg", category: "tools", type: "action" },
+        { name: "🔗 تقصير الروابط", desc: "Bitly", url: "https://bitly.com", category: "tools", type: "action" },
+        { name: "📊 Speedtest", desc: "قياس سرعة الإنترنت", url: "https://speedtest.net", category: "tools", type: "action" },
+        { name: "🎨 Canva", desc: "تصميم سهل", url: "https://canva.com", category: "tools", type: "action" },
+        { name: "🤖 ChatGPT", desc: "المساعد الذكي", url: "https://chat.openai.com", category: "tools", type: "action" },
+        { name: "🤖 Gemini", desc: "ذكاء Google", url: "https://gemini.google.com", category: "tools", type: "action" },
+        { name: "🤖 Claude AI", desc: "Anthropic", url: "https://claude.ai", category: "tools", type: "action" },
+        { name: "🤖 Copilot", desc: "Microsoft AI", url: "https://copilot.microsoft.com", category: "tools", type: "action" },
+    ];
+
+    const SHORTCUT_TOOLS = [
+        { name: "Gmail", desc: "البريد الإلكتروني", url: "https://mail.google.com", category: "google", type: "shortcut" },
+        { name: "YouTube", desc: "مقاطع فيديو", url: "https://youtube.com", category: "google", type: "shortcut" },
+        { name: "Google News", desc: "الأخبار", url: "https://news.google.com", category: "google", type: "shortcut" },
+        { name: "YouTube Studio", desc: "إدارة القناة", url: "https://studio.youtube.com", category: "google", type: "shortcut" },
+        { name: "Google Analytics", desc: "تحليل المواقع", url: "https://analytics.google.com", category: "google", type: "shortcut" },
+        { name: "Search Console", desc: "أدوات المواقع", url: "https://search.google.com/search-console", category: "google", type: "shortcut" },
+        { name: "Facebook", desc: "فيسبوك", url: "https://facebook.com", category: "social", type: "shortcut" },
+        { name: "Instagram", desc: "انستغرام", url: "https://instagram.com", category: "social", type: "shortcut" },
+        { name: "X (Twitter)", desc: "تويتر", url: "https://x.com", category: "social", type: "shortcut" },
+        { name: "TikTok", desc: "تيك توك", url: "https://tiktok.com", category: "social", type: "shortcut" },
+        { name: "LinkedIn", desc: "لينكد إن", url: "https://linkedin.com", category: "social", type: "shortcut" },
+        { name: "Reddit", desc: "ريديت", url: "https://reddit.com", category: "social", type: "shortcut" },
+        { name: "Pinterest", desc: "بنترست", url: "https://pinterest.com", category: "social", type: "shortcut" },
+        { name: "Snapchat Web", desc: "سناب شات", url: "https://web.snapchat.com", category: "social", type: "shortcut" },
+        { name: "Discord", desc: "ديسكورد", url: "https://discord.com/app", category: "social", type: "shortcut" },
+        { name: "Threads", desc: "ثريدز", url: "https://threads.net", category: "social", type: "shortcut" },
+        { name: "Perplexity", desc: "بحث ذكي", url: "https://perplexity.ai", category: "tools", type: "shortcut" },
+        { name: "GitHub", desc: "منصة المطورين", url: "https://github.com", category: "tools", type: "shortcut" },
+        { name: "Stack Overflow", desc: "مجتمع البرمجة", url: "https://stackoverflow.com", category: "tools", type: "shortcut" },
+        { name: "CodePen", desc: "محرر أكواد", url: "https://codepen.io", category: "tools", type: "shortcut" },
+        { name: "Replit", desc: "برمجة أونلاين", url: "https://replit.com", category: "tools", type: "shortcut" },
+        { name: "Vercel", desc: "نشر المواقع", url: "https://vercel.com", category: "tools", type: "shortcut" },
+        { name: "Netlify", desc: "استضافة مجانية", url: "https://netlify.com", category: "tools", type: "shortcut" },
+        { name: "CodeSandbox", desc: "صندوق رمل", url: "https://codesandbox.io", category: "tools", type: "shortcut" },
+        { name: "Notion", desc: "إدارة المشاريع", url: "https://notion.so", category: "tools", type: "shortcut" },
+        { name: "Trello", desc: "لوحة المهام", url: "https://trello.com", category: "tools", type: "shortcut" },
+        { name: "Figma", desc: "تصميم UI/UX", url: "https://figma.com", category: "tools", type: "shortcut" },
+        { name: "Slack", desc: "تواصل الفرق", url: "https://slack.com", category: "tools", type: "shortcut" },
+        { name: "Zoom", desc: "اجتماعات", url: "https://zoom.us", category: "tools", type: "shortcut" },
+        { name: "Evernote", desc: "ملاحظات متقدمة", url: "https://evernote.com", category: "tools", type: "shortcut" },
+        { name: "Todoist", desc: "قائمة مهام", url: "https://todoist.com", category: "tools", type: "shortcut" },
+        { name: "Amazon", desc: "تسوق عالمي", url: "https://amazon.com", category: "tools", type: "shortcut" },
+        { name: "AliExpress", desc: "تسوق صيني", url: "https://aliexpress.com", category: "tools", type: "shortcut" },
+        { name: "PayPal", desc: "دفع إلكتروني", url: "https://paypal.com", category: "tools", type: "shortcut" },
+        { name: "eBay", desc: "مزادات", url: "https://ebay.com", category: "tools", type: "shortcut" },
+        { name: "Netflix", desc: "أفلام ومسلسلات", url: "https://netflix.com", category: "tools", type: "shortcut" },
+        { name: "Spotify", desc: "موسيقى", url: "https://open.spotify.com", category: "tools", type: "shortcut" },
+        { name: "Twitch", desc: "بث مباشر", url: "https://twitch.tv", category: "tools", type: "shortcut" },
+        { name: "Disney+", desc: "ديزني بلس", url: "https://disneyplus.com", category: "tools", type: "shortcut" },
+        { name: "Wikipedia", desc: "الموسوعة", url: "https://wikipedia.org", category: "tools", type: "shortcut" },
+        { name: "Khan Academy", desc: "تعليم مجاني", url: "https://khanacademy.org", category: "tools", type: "shortcut" },
+        { name: "Coursera", desc: "دورات عالمية", url: "https://coursera.org", category: "tools", type: "shortcut" },
+        { name: "Udemy", desc: "دورات مدفوعة", url: "https://udemy.com", category: "tools", type: "shortcut" },
+        { name: "Duolingo", desc: "تعلم اللغات", url: "https://duolingo.com", category: "tools", type: "shortcut" },
+        { name: "Deepl", desc: "ترجمة احترافية", url: "https://deepl.com", category: "tools", type: "shortcut" },
+        { name: "Wolfram Alpha", desc: "محرك معرفة", url: "https://wolframalpha.com", category: "tools", type: "shortcut" },
+    ];
+
+    let allTools = [];
+
+    function init() {
+        checkLicense();
+        allTools = [...ACTION_TOOLS, ...SHORTCUT_TOOLS];
+        renderTools();
+        updateCounts();
+    }
+
+    function checkLicense() {
+        const goldKey = localStorage.getItem('toolboxpro_gold_license');
+        if (goldKey === 'nourddine_abatal_gold_2026') {
+            activateGold();
+            return;
+        }
+        const trialStart = localStorage.getItem('toolboxpro_trial_start');
+        const now = new Date().getTime();
+        if (!trialStart) {
+            localStorage.setItem('toolboxpro_trial_start', now);
+            trialDaysLeft = 15;
+        } else {
+            const elapsed = Math.floor((now - parseInt(trialStart)) / (1000 * 60 * 60 * 24));
+            trialDaysLeft = Math.max(0, 15 - elapsed);
+        }
+        document.getElementById('trialDays').textContent = trialDaysLeft;
+        if (trialDaysLeft <= 0) {
+            document.getElementById('trialBanner').style.display = 'none';
+            document.getElementById('toolsList').style.display = 'none';
+            document.querySelector('.search-bar').style.display = 'none';
+            document.querySelector('.tabs').style.display = 'none';
+            document.querySelector('.filters').style.display = 'none';
+            document.getElementById('upgradeBanner').innerHTML = '<h3>⏰ انتهت النسخة التجريبية</h3><p>اشتري الذهبي للوصول الكامل</p><button class="btn-gold" onclick="showPayment()">💳 اشترك بـ 9.99$</button>';
+        }
+    }
+
+    function activateGold() {
+        isGold = true;
+        document.getElementById('goldBadge').classList.add('active');
+        document.getElementById('upgradeBanner').style.display = 'none';
+        document.getElementById('trialBanner').style.display = 'none';
+        updateCounts();
+        renderTools();
+    }
+
+    function updateCounts() {
+        const ac = allTools.filter(t => t.type === 'action').length;
+        const sc = allTools.filter(t => t.type === 'shortcut').length;
+        document.getElementById('actionCount').textContent = ac;
+        document.getElementById('shortcutCount').textContent = sc;
+        document.getElementById('totalCount').textContent = isGold ? '1000' : (ac + sc);
+    }
+
+    function renderTools() {
+        if (trialDaysLeft <= 0 && !isGold) return;
+        const container = document.getElementById('toolsList');
+        const query = document.getElementById('searchInput')?.value.toLowerCase() || '';
+        let filtered = allTools.filter(tool => {
+            const matchesTab = tool.type === currentTab;
+            const matchesFilter = currentFilter === 'all' || tool.category === currentFilter;
+            const matchesSearch = !query || tool.name.toLowerCase().includes(query) || tool.desc.toLowerCase().includes(query) || tool.category.toLowerCase().includes(query);
+            return matchesTab && matchesFilter && matchesSearch;
+        });
+        container.innerHTML = '';
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="no-results"><p>🔍 لا توجد نتائج</p></div>`;
+            return;
+        }
+        filtered.forEach(tool => {
+            const a = document.createElement('a');
+            a.href = tool.url;
+            a.target = '_blank';
+            a.className = 'tool-card';
+            a.innerHTML = `<div class="tool-left"><div class="tool-name">${tool.name}</div><div class="tool-desc">${tool.desc}</div><div class="tool-meta"><span class="tool-tag ${tool.type==='shortcut'?'tag-red':'tag-green'}">${tool.type==='shortcut'?'اختصار':'أمر مباشر'}</span>${tool.category==='direct'?'<span class="tool-tag tag-purple">📱 فوري</span>':''}</div></div><span class="tool-btn ${tool.type==='shortcut'?'btn-red':'btn-green'}">${tool.type==='shortcut'?'🔗 فتح':'⚡ تنفيذ'}</span>`;
+            container.appendChild(a);
+        });
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.getElementById('tabAction').classList.toggle('active', tab === 'action');
+        document.getElementById('tabShortcut').classList.toggle('active', tab === 'shortcut');
+        renderTools();
+    }
+
+    function setFilter(filter, btn) {
+        currentFilter = filter;
+        document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTools();
+    }
+
+    function showPayment() {
+        const choice = confirm('💳 ToolBox Pro ذهبي - 9.99$ مدى الحياة\n\n• 1000 أداة كاملة\n• تحديثات أسبوعية\n• دعم مباشر\n\nOK = Ko-fi | Cancel = PayPal');
+        if (choice) window.open('https://ko-fi.com/nourddineabatal', '_blank');
+        else window.open('https://www.paypal.com/paypalme/nourddineabatal06', '_blank');
+        setTimeout(() => {
+            const key = prompt('🔑 أدخل كود التفعيل:\n(للتجربة: trial)');
+            if (key === 'nourddine_abatal_gold_2026' || key === 'trial') {
+                localStorage.setItem('toolboxpro_gold_license', 'nourddine_abatal_gold_2026');
+                activateGold();
+                alert('✅ تم تفعيل ToolBox Pro الذهبي!\nشكراً Nourddine Abatal');
+            } else if (key) alert('❌ كود غير صحيح\nnourddineabatal06@gmail.com');
+        }, 2000);
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
