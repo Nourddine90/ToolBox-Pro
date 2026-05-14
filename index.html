@@ -28,6 +28,17 @@
             min-height: 100vh; padding: 16px; padding-bottom: 100px;
         }
         .container { max-width: 520px; margin: 0 auto; }
+
+        /* زر التثبيت اليدوي - الجديد */
+        .install-banner {
+            background: #a371f722; border: 2px solid var(--purple);
+            border-radius: 14px; padding: 14px 18px; margin-bottom: 14px;
+            text-align: center; cursor: pointer; transition: 0.2s;
+        }
+        .install-banner:hover { background: #a371f733; }
+        .install-banner .install-icon { font-size: 28px; }
+        .install-banner p { font-size: 0.82em; margin: 4px 0; color: var(--purple); font-weight: bold; }
+
         .header { text-align: center; padding: 20px 0 14px; }
         .header .icon { font-size: 48px; }
         .header h1 {
@@ -90,11 +101,39 @@
         footer a { color: #666; text-decoration: none; } footer a:hover { color: var(--gold); }
         #toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 22px; font-size: 0.78em; font-weight: 600; opacity: 0; transition: 0.3s; z-index: 999; white-space: nowrap; }
         #toast.show { opacity: 1; bottom: 100px; }
+
+        /* نافذة تعليمات التثبيت */
+        .install-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .install-modal.show { display: flex; }
+        .install-modal-content {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 25px; max-width: 350px; width: 90%;
+            text-align: center;
+        }
+        .install-modal-content h3 { margin-bottom: 15px; color: var(--purple); }
+        .install-modal-content p { font-size: 0.85em; color: var(--sub); margin-bottom: 10px; }
+        .install-modal-content .step-img {
+            font-size: 50px; margin: 15px 0;
+        }
+        .install-modal-content .close-btn {
+            background: var(--purple); color: white; padding: 10px 30px;
+            border: none; border-radius: 20px; font-weight: bold; cursor: pointer;
+            font-family: inherit; margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- بانر التثبيت اليدوي -->
+    <div class="install-banner" onclick="showInstallHelp()">
+        <div class="install-icon">📲</div>
+        <p>اضغط هنا لتثبيت التطبيق على شاشتك</p>
+    </div>
+
     <div class="header">
         <div class="icon">🧰</div>
         <h1>ToolBox Pro</h1>
@@ -149,6 +188,21 @@
     </footer>
 </div>
 
+<!-- نافذة تعليمات التثبيت -->
+<div class="install-modal" id="installModal">
+    <div class="install-modal-content">
+        <h3>📲 كيفية تثبيت التطبيق</h3>
+        <div class="step-img">👇</div>
+        <p><strong>1.</strong> اضغط على أيقونة <strong>المشاركة</strong> (السهم للأعلى) أو <strong>⋮</strong> (القائمة)</p>
+        <div class="step-img">📋</div>
+        <p><strong>2.</strong> اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong> أو <strong>"تثبيت التطبيق"</strong></p>
+        <div class="step-img">✅</div>
+        <p><strong>3.</strong> اضغط <strong>"إضافة"</strong> أو <strong>"تثبيت"</strong></p>
+        <p style="font-size:0.7em; color:#888;">سيظهر التطبيق كأيقونة على شاشتك</p>
+        <button class="close-btn" onclick="closeInstallHelp()">حسناً، فهمت</button>
+    </div>
+</div>
+
 <div class="floating-btns">
     <a href="https://wa.me/212711366556?text=مرحباً%20Nourddine،%20لدي%20سؤال%20حول%20ToolBox%20Pro" target="_blank" class="float-btn btn-wa">💬 واتساب</a>
     <button class="float-btn btn-gold-float" onclick="showPayment()">👑 ذهبي</button>
@@ -166,6 +220,16 @@
     let currentFilter = 'all';
     let isGold = false;
     let trialDaysLeft = 15;
+
+    // دالة إظهار تعليمات التثبيت
+    function showInstallHelp() {
+        document.getElementById('installModal').classList.add('show');
+    }
+
+    // دالة إخفاء تعليمات التثبيت
+    function closeInstallHelp() {
+        document.getElementById('installModal').classList.remove('show');
+    }
 
     const ACTION_TOOLS = [
         { name: "📨 فتح الرسائل SMS", desc: "تطبيق الرسائل النصية", url: "sms:", category: "direct", type: "action" },
